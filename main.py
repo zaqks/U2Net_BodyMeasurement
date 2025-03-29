@@ -60,29 +60,63 @@ class BodyMeasurer:
         self.mask = Image.open(mask_path).convert('L')
         self.bbox = self. mask.getbbox()
 
-    def get_body_height(self):
-        return (self.bbox[3] - self.bbox[1])*self.resize_factor
+    # NO RESIZE
+    def _get_body_height(self):
+        return (self.bbox[3] - self.bbox[1])
 
-    def get_body_width(self,  level=0.5):
+    def _get_body_width(self, level=0.5):
         crop = self.mask.crop(self.bbox)
+        crop_array = np.array(crop)
 
-        j = int(crop.height*level)
-        row = [_ for _ in range(crop.width) if crop.getpixel(
-            (_, j))]
+        j = int(crop.height * level)
+        row = crop_array[j, :]
 
-        return (row[-1] - row[0])*self.resize_factor
+        # Find indices of non-zero pixels
+        non_zero_indices = np.where(row)[0]
 
+        if len(non_zero_indices) > 0:
+            return non_zero_indices[0], non_zero_indices[-1]
+
+        return non_zero_indices
+
+    # RESIZE
+    def get_body_height(self):
+        return self._get_body_height() * self.resize_factor
+
+    def get_body_width(self, level=0.5):
+        _, __ = self._get_body_width(level=level)
+        return (__-_) * self.resize_factor
+
+    # DRAW
     def draw_markers(self, level=0.5):
-        # COORDS
-        width = self.bbox[2] - self.bbox[0]
-
-        x1, y1, x2, y2 = self.bbox
-        x1, x2 = x1 + width/2, x2-width/2
-        #
-        img = Image.open(self.img_path)
+        # DRAW
+        # img = Image.open(self.img_path)
+        img = self.mask.convert('RGB')
         draw = ImageDraw.Draw(img)
 
+        # COORDS
+        crop_width = self.bbox[2] - self.bbox[0]
+        crop_height = self.bbox[3] - self.bbox[1]
+
+        # HEIGHT
+        x1, y1, x2, y2 = self.bbox
+        x1 += crop_width/2
+        x2 = x1
+
         draw.line([(x1, y1), (x2, y2)], fill='green', width=5)
+
+        # WIDTH
+        y1 = level * crop_height + (self.mask.height - crop_height)/2
+        y2 = y1
+
+        x1, x2 = self._get_body_width(level=level)
+
+        x1 += (self.mask.width - crop_width)/2
+        x2 += (self.mask.width - crop_width)/2
+
+        draw.line([(x1, y1), (x2, y2)], fill='green', width=5)
+
+        # SAVE
         img.save(join(self.out_dir, 'body_lines.png'))
 
 
