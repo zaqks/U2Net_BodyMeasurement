@@ -1,5 +1,5 @@
 from PIL import Image, ImageDraw
-from U2Net import BodySegmentationModel
+from .U2Net import BodySegmentationModel
 from os.path import join
 import numpy as np
 
@@ -119,18 +119,3 @@ class BodyMeasurer:
 
         # SAVE
         img.save(join(self.out_dir, 'body_lines.png'))
-
-
-if __name__ == '__main__':
-    measurer = BodyMeasurer(resize_factor=0.0951, out_dir='out/')
-    # CALIBRATION
-    measurer.calibrate('data/test.jpg', body_height=180)
-    # SET THE BODY
-    measurer.set_body('data/test.jpg')
-
-    # GET DIMENSIONS
-    print(f'height: {measurer.get_body_height()}cm')
-    print(f'waist: {measurer.get_body_width(level=0.45)}cm')
-
-    # ADDON: DRAW ELLIPSE
-    measurer.draw_markers(level=0.45)
