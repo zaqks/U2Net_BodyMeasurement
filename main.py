@@ -90,7 +90,7 @@ class BodyMeasurer:
     # DRAW
     def draw_markers(self, level=0.5):
         # DRAW
-        img = Image.open(self.img_path)        
+        img = Image.open(self.img_path)
         draw = ImageDraw.Draw(img)
 
         # COORDS
@@ -105,10 +105,10 @@ class BodyMeasurer:
         draw.line([(x1, y1), (x2, y2)], fill='green', width=5)
 
         # WIDTH
-        y1 = level * crop_height + (self.mask.height - crop_height)/2
+        y1 = self.bbox[1] + crop_height*level
         y2 = y1
 
-        x1, x2 = self._get_body_width(level=level)        
+        x1, x2 = self._get_body_width(level=level)
 
         x1 += self.bbox[0]
         x2 += self.bbox[0]
@@ -125,6 +125,6 @@ if __name__ == '__main__':
     measurer.set_body('data/back.jpg')
 
     print(f'height: {measurer.get_body_height()}cm')
-    print(f'waist: {measurer.get_body_width()}cm')
+    print(f'waist: {measurer.get_body_width(level=0.41)}cm')
 
-    measurer.draw_markers()
+    measurer.draw_markers(level=0.41)
