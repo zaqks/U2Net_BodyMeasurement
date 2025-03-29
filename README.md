@@ -47,7 +47,7 @@ measurer.draw_markers(level=0.45)
 ```
 
 
-# DEMO
+# Demo
 <table style="width:100%">
     <tbody>
       <tr>
@@ -74,7 +74,7 @@ measurer.draw_markers(level=0.45)
   
 </table>
 
-# CITATION
+# Citation
 ```
 @InProceedings{Qin_2020_PR,
 author = {Qin, Xuebin and Zhang, Zichen and Huang, Chenyang and Dehghan, Masood and Zaiane, Osmar and Jagersand, Martin},
