@@ -125,6 +125,6 @@ if __name__ == '__main__':
     measurer.set_body('data/back.jpg')
 
     print(f'height: {measurer.get_body_height()}cm')
-    print(f'waist: {measurer.get_body_width(level=0.41)}cm')
+    print(f'waist: {measurer.get_body_width(level=0.6)}cm')
 
     measurer.draw_markers(level=0.41)
