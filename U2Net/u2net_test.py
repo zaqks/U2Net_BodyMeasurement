@@ -43,7 +43,7 @@ class BodySegmentationModel:
 
     # ADAPTED SAVING FUNCTION
 
-    def save_output(self, image_name, pred, d_dir):
+    def save_output(self, image_name: str, pred, output_name: str):
         try:
             # Convert prediction tensor to PIL Image
             predict = pred.squeeze().cpu().data.numpy()
@@ -66,7 +66,7 @@ class BodySegmentationModel:
             imidx = ".".join(parts[:-1])  # Remove file extension
 
             # Save final thresholded image as PNG
-            thresholded_im.save(os.path.join(d_dir, f"{imidx}.png"))
+            thresholded_im.save(output_name)
 
         except Exception as error:
             raise Exception(f"Error saving image: {error}")
@@ -108,7 +108,7 @@ class BodySegmentationModel:
             self.model.cuda()
         self.model.eval()
 
-    def predict(self, src, out):
+    def predict(self, src: str, out: str):
         img_name_list = [src]
 
         # --------- 2. dataloader ---------
@@ -126,10 +126,11 @@ class BodySegmentationModel:
                                             collate_fn=self.my_collate)
 
         # --------- 4. inference for each image ---------
+
         for i_test, data_test in enumerate(test_salobj_dataloader):
             try:
                 print("\r------In processing file {} with name {}--------".format(i_test +
-                                                                                  1, img_name_list[i_test].split("/")[-1]), end='')
+                                                                                  1, img_name_list[i_test].split("/")[-1]), end='\n')
 
                 inputs_test = data_test['image']
                 inputs_test = inputs_test.type(torch.FloatTensor)
@@ -155,4 +156,4 @@ class BodySegmentationModel:
                 #     error_mess = img_name_list[i_test] + \
                 #         '*' + str(error) + '\n'
                 #     err_file.write(error_mess)
-                continue
+                # continue
