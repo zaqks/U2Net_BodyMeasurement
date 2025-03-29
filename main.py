@@ -111,8 +111,8 @@ class BodyMeasurer:
 
         x1, x2 = self._get_body_width(level=level)
 
-        x1 += (self.mask.width - crop_width)/2
-        x2 += (self.mask.width - crop_width)/2
+        x1 += (self.mask.width - x2-x1)/2
+        x2 += (self.mask.width - x2-x1)/2
 
         draw.line([(x1, y1), (x2, y2)], fill='green', width=5)
 
