@@ -113,7 +113,7 @@ class BodyMeasurer:
         x1 += self.bbox[0]
         x2 += self.bbox[0]
 
-        draw.line([(x1, y1), (x2, y2)], fill='green', width=5)
+        draw.line([(x1, y1), (x2, y2)], fill='red', width=5)
 
         # SAVE
         img.save(join(self.out_dir, 'body_lines.png'))
