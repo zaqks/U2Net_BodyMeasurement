@@ -105,15 +105,17 @@ class BodyMeasurer:
         draw.line([(x1, y1), (x2, y2)], fill='green', width=5)
 
         # WIDTH
-        y1 = self.bbox[1] + crop_height*level
-        y2 = y1
+        y3 = self.bbox[1] + crop_height*level
+        y4 = y3
 
-        x1, x2 = self._get_body_width(level=level)
+        x3, x4 = self._get_body_width(level=level)
 
-        x1 += self.bbox[0]
-        x2 += self.bbox[0]
+        x3 += self.bbox[0]
+        x4 += self.bbox[0]
 
-        draw.line([(x1, y1), (x2, y2)], fill='red', width=5)
+        draw.line([(x3, y3), (x4, y4)], fill='red', width=5)
+
+        draw.ellipse((x3, y1, x4, y2), outline="blue", width=5)
 
         # SAVE
         img.save(join(self.out_dir, 'body_lines.png'))
@@ -121,10 +123,14 @@ class BodyMeasurer:
 
 if __name__ == '__main__':
     measurer = BodyMeasurer(resize_factor=0.0951, out_dir='out/')
-    # measurer.calibrate('data/front.jpg', body_height=180)
-    measurer.set_body('data/back.jpg')
+    # CALIBRATION
+    measurer.calibrate('data/test.jpg', body_height=180)
+    # SET THE BODY
+    measurer.set_body('data/test.jpg')
 
+    # GET DIMENSIONS
     print(f'height: {measurer.get_body_height()}cm')
-    print(f'waist: {measurer.get_body_width(level=0.6)}cm')
+    print(f'waist: {measurer.get_body_width(level=0.45)}cm')
 
-    measurer.draw_markers(level=0.41)
+    # ADDON: DRAW ELLIPSE
+    measurer.draw_markers(level=0.45)
