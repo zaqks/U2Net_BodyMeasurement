@@ -1,3 +1,18 @@
+<table style="width:100%">
+  <tr>    
+    <th>Input Image</th>
+    <th>Result</th>
+    <th>Height, Waist_Width</th>
+  </tr>
+  <tr>    
+    <td><img src='data/test.jpg' width='100%'></td>    
+    <td><img src='out/body_lines.png' width='100%'></td>
+    <td>180cm, 32.72cm</td>    
+  </tr>
+</table>
+
+
+
 # BodyMeasurementAI
 This project leverages the <a href='https://github.com/LeCongThuong/U2Net'>U2Net model</a> to segment the human body from images and accurately extract its dimensions. 
 By calibrating the camera to determine the body's distance, the system ensures precise measurements. 
@@ -9,12 +24,6 @@ The fixed position ensures consistent camera perspective and depth, allowing cal
 Once calibrated, any subsequent subject standing in the same position can have their height and body proportions accurately determined through proportional pixel analysis of the AI-segmented silhouette, maintaining measurement consistency across different individuals without requiring additional distance sensors.
 
 Alternatively, if the scaling factor has already been calculated, it can be set during the initialization phase of the measurer, allowing to bypass the calibration process and proceed directly to the calculations.
-
-Citations:
-[1] https://github.com/LeCongThuong/U2Net
-
----
-Answer from Perplexity: pplx.ai/share
 
 # Usage Example
 ```py
@@ -35,5 +44,44 @@ print(f'waist: {measurer.get_body_width(level=0.45)}cm')
 
 # ADDON: DRAW ELLIPSE
 measurer.draw_markers(level=0.45)
-
 ```
+
+
+# DEMO
+<table style="width:100%">
+    <tbody>
+      <tr>
+        <td>Input Image</td>
+        <td><img src='data/test.jpg' width='100%'></td>
+      </tr>
+      <tr>
+        <td>Subject Mask</td>
+        <td><img src='out/body_mask.png' width='100%'></td>
+      </tr>
+      <tr>        
+        <td>Result</td>
+        <td><img src='out/body_lines.png' width='100%'></td>
+      </tr>
+      <tr>
+        <td>Height</td>
+        <td>180cm</td>
+      </tr>
+      <tr>
+        <td>Waist Width</td>
+        <td>32.72cm</td>
+      </tr>
+    </tbody>
+  
+</table>
+
+# CITATION
+```
+@InProceedings{Qin_2020_PR,
+author = {Qin, Xuebin and Zhang, Zichen and Huang, Chenyang and Dehghan, Masood and Zaiane, Osmar and Jagersand, Martin},
+title = {U^2-Net: Going Deeper with Nested U-Structure for Salient Object Detection},
+booktitle = {Pattern Recognition},
+year = {2020}
+}
+```
+
+
