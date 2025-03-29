@@ -47,7 +47,7 @@ measurer.draw_markers(level=0.45)
 ```
 
 
-# Demo
+# Results
 <table style="width:100%">
     <tbody>
       <tr>
@@ -73,6 +73,30 @@ measurer.draw_markers(level=0.45)
     </tbody>
   
 </table>
+
+# Calculation of Height and Width
+
+The dimensions of the human body, specifically height and width, are calculated using the following process:
+- Height Calculation
+
+    - Bounding Box Generation: After segmenting the body using the U2Net model, a bounding box is drawn around the mask that represents the segmented body.
+
+    - Height Measurement: The height of the bounding box (in pixels) is directly used as the body height in the image. This measurement is then scaled to real-world dimensions using a pre-calculated scaling factor obtained during calibration.
+
+- Width Calculation
+
+    - Level Selection: A level parameter is defined between 0.1 and 1 (representing a percentage of the total height). This level determines which horizontal slice of the mask will be analyzed for width.
+
+    - Pixel Analysis: At the selected level, corresponding to `level×bb_height`, the row of pixels is extracted from the mask.
+
+    - Width Measurement:
+
+        The maximum and minimum x-coordinates of non-zero pixels in this row are identified.
+
+        The width is calculated as `max_x − min_x`, representing the widest part of the body at that specific level.
+
+    - Scaling: Similar to height, this pixel-based width is converted to real-world dimensions using the scaling factor.
+
 
 # Citation
 ```
