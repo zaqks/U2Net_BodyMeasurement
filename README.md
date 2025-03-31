@@ -6,7 +6,7 @@
   </tr>
   <tr>    
     <td><img src='data/test.jpg' width='100%'></td>    
-    <td><img src='out/test_lines.png' width='100%'></td>
+    <td><img src='out/test_lines.jpg' width='100%'></td>
     <td>180cm, 32.72cm</td>    
   </tr>
 </table>
@@ -57,11 +57,11 @@ measurer.draw_markers(level=0.45)
       </tr>
       <tr>
         <td>Subject Mask</td>
-        <td><img src='out/test_mask.png' width='100%'></td>
+        <td><img src='out/test_mask.jpg' width='100%'></td>
       </tr>
       <tr>        
         <td>Result</td>
-        <td><img src='out/test_lines.png' width='100%'></td>
+        <td><img src='out/test_lines.jpg' width='100%'></td>
       </tr>
       <tr>
         <td>Height</td>
