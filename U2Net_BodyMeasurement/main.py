@@ -120,4 +120,4 @@ class BodyMeasurer:
 
         # SAVE
         name, extension = splitext(basename(self.img_path))        
-        img.save(join(self.out_dir, f'{name}_lines.{extension}'))
+        img.save(join(self.out_dir, f'{name}_lines{extension}'))
