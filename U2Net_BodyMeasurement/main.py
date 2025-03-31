@@ -53,7 +53,7 @@ class BodyMeasurer:
 
         # SEGMENTATION
         name, extension = splitext(basename(img_path))
-        mask_path = join(self.out_dir, f"{name}_mask{extension}")
+        self.mask_path = join(self.out_dir, f"{name}_mask.png")
         self.img_path = img_path
         self.mdl.predict(self.img_path, mask_path)
 
@@ -62,6 +62,7 @@ class BodyMeasurer:
         self.bbox = self. mask.getbbox()
 
     # NO RESIZE
+
     def _get_body_height(self):
         return (self.bbox[3] - self.bbox[1])
 
@@ -119,5 +120,5 @@ class BodyMeasurer:
         draw.ellipse((x3, y1, x4, y2), outline="blue", width=5)
 
         # SAVE
-        name, extension = splitext(basename(self.img_path))        
-        img.save(join(self.out_dir, f'{name}_lines{extension}'))
+        name, extension = splitext(basename(self.img_path))
+        img.save(join(self.out_dir, f'{name}_lines.png'))
