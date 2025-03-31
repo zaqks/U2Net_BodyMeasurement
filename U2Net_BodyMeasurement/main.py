@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw
 from .U2Net import BodySegmentationModel
-from os.path import join
+from os.path import join, basename, splitext
 import numpy as np
 
 
@@ -52,7 +52,8 @@ class BodyMeasurer:
             return None
 
         # SEGMENTATION
-        mask_path = join(self.out_dir, 'body_mask.png')
+        name, extension = splitext(basename(img_path))
+        mask_path = join(self.out_dir, f"{name}_mask{extension}")
         self.img_path = img_path
         self.mdl.predict(self.img_path, mask_path)
 
@@ -118,4 +119,5 @@ class BodyMeasurer:
         draw.ellipse((x3, y1, x4, y2), outline="blue", width=5)
 
         # SAVE
-        img.save(join(self.out_dir, 'body_lines.png'))
+        name, extension = splitext(basename(self.img_path))        
+        img.save(join(self.out_dir, f'{name}_lines.{extension}'))
