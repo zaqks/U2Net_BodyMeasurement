@@ -12,6 +12,8 @@ class BodyMeasurer:
         self.resize_factor = resize_factor  # 1px = ? CM
         #
         self.img_path = None
+        self.mask_path = None
+
         self.mask = None
         self.bbox = None
 
@@ -55,10 +57,10 @@ class BodyMeasurer:
         name, extension = splitext(basename(img_path))
         self.mask_path = join(self.out_dir, f"{name}_mask.png")
         self.img_path = img_path
-        self.mdl.predict(self.img_path, mask_path)
+        self.mdl.predict(self.img_path, self.mask_path)
 
         # GET THE BOUNDING BOX
-        self.mask = Image.open(mask_path).convert('L')
+        self.mask = Image.open(self.mask_path).convert('L')
         self.bbox = self. mask.getbbox()
 
     # NO RESIZE
