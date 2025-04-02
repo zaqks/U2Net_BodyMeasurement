@@ -160,7 +160,7 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-*.pth
+# *.pth
 #saved_models/*
 test_save_numpy.py
 
